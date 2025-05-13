@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Blogs from './components/views/Blogs.jsx';
 import Home from './components/views/Home.jsx';
+import Blog from './components/views/Blog.jsx';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: '/blogs',
     element: <Blogs/>,
+  },
+  {
+    path: '/blogs/:blogId',
+    element: <Blog/>,
   }
 
 ]);

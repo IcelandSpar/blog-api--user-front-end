@@ -16,7 +16,7 @@ const Blogs = () => {
 
     setLoading(true);
 
-      fetch("http://localhost:3000/blogs", { mode: "cors"})
+      fetch("http://localhost:3000/blogs/preview", { mode: "cors"})
       .then((response) => response.json())
       .then((response) => setBlogs(response))
       .catch((err) => setError(err))
@@ -29,7 +29,6 @@ const Blogs = () => {
     return (
       <div>
        <Navbar/>
-
         <p>Something went wrong : (</p>
       </div>
     )
@@ -39,25 +38,28 @@ const Blogs = () => {
   return (
     <div className={styles.blogsPage}>
     <Navbar  navStyle={styles.blogsNavBar}/>
-
       <main className={styles.blogsMainCont}>
         <h1>Blogs: </h1>
         <ul className={styles.blogsUl}>
           {loading ? <p>Blogs are loading in...</p> : null}
-          {blogs.map((blog) => {
+          {
+            
+          !blogs ? null : blogs.map((blog) => {
 
             return (
               <li key={blog.id}>
-                <h2>{blog.title}</h2>
+                <Link to={'/blogs/' + blog.id}><h2>{blog.title}</h2></Link>
+                <p>{blog.author.user.username}</p>
                 <p>{blog.content}</p>
                 <p>{blog.createdAt}</p>
               </li>
             )
-          })}
+          })
+          }
         </ul>
-        <button onClick={() => {
+        {/* <button onClick={() => {
           return setCount((prevState) => prevState + 1);
-        }}>Count {count}</button>
+        }}>Count {count}</button> */}
       </main>
     </div>
   );
