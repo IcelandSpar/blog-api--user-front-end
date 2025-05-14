@@ -4,6 +4,8 @@ import { formatRelative } from 'date-fns'
 
 import Navbar from './partials/Navbar.jsx';
 
+import styles from '../../styles/Blog.module.css'
+
 const Blog = () => {
 
   const [blog, setBlog] = useState(null);
@@ -26,16 +28,16 @@ const Blog = () => {
     );
   }
 
-
+  console.log(blog)
   return (
-    <div>
-      <Navbar/>
-      <main>
+    <div className={styles.blogPage}>
+      <Navbar navStyle={styles.navStyle}/>
+      <main className={styles.blogsMainCont}>
         {loading ? <p>Blog Loading...</p> : null }
       {!blog ? null : (
-          <div>
-            <h1>{blog.title}</h1>
-            <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link>
+          <div className={styles.blogContent}>
+            <h1 className={styles.blogTitle}>{blog.title}</h1>
+            <p>Written By: <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link></p>
             <p>{blog.content}</p>
             <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
