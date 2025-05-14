@@ -1,12 +1,12 @@
 import {  useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { formatRelative } from 'date-fns';
 
 import Navbar from './partials/Navbar';
 
 import styles from '../../styles/Blogs.module.css'
 
 const Blogs = () => {
-  const [count, setCount] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -49,9 +49,10 @@ const Blogs = () => {
             return (
               <li key={blog.id}>
                 <Link to={'/blogs/' + blog.id}><h2>{blog.title}</h2></Link>
-                <p>{blog.author.user.username}</p>
+                <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link>
                 <p>{blog.content}</p>
-                <p>{blog.createdAt}</p>
+                <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
+                <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
               </li>
             )
           })

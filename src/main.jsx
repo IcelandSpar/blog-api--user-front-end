@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Blogs from './components/views/Blogs.jsx';
 import Home from './components/views/Home.jsx';
 import Blog from './components/views/Blog.jsx';
+import Authors from './components/views/Authors.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/blogs/:blogId',
     element: <Blog/>,
+  },
+  {
+    path: '/authors/:authorId',
+    element: <Authors/>,
   }
 
 ]);

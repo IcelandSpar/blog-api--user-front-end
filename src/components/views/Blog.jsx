@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { formatRelative } from 'date-fns'
 
 import Navbar from './partials/Navbar.jsx';
 
@@ -17,7 +18,13 @@ const Blog = () => {
     .then((response) => setBlog(response))
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
-  },[blogId])
+  },[blogId]);
+
+  if(error) {
+    return(
+      <p>Something went wrong...</p>
+    );
+  }
 
 
   return (
@@ -28,7 +35,10 @@ const Blog = () => {
       {!blog ? null : (
           <div>
             <h1>{blog.title}</h1>
+            <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link>
             <p>{blog.content}</p>
+            <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
+            <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
           </div>
       )}
       </main>      
