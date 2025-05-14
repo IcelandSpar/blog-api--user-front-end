@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { formatRelative } from 'date-fns'
 
 import Navbar from './partials/Navbar.jsx';
+import Comment from './partials/Comment.jsx';
 
 import styles from '../../styles/Blog.module.css'
 
@@ -12,14 +13,28 @@ const Blog = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [comments, setComments] = useState(null);
+  const [commentErr, setCommentErr] = useState(null);
+  const [loadingComments, setLoadingComments] = useState(true);
+
+
   const { blogId } = useParams();
   useEffect(() => {
     setLoading(true);
+    setLoadingComments(true);
+
     fetch(`http://localhost:3000/blogs/${blogId}`)
     .then((response) => response.json())
     .then((response) => setBlog(response))
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
+
+    fetch(`http://localhost:3000/comments/${blogId}`)
+    .then((res) => res.json())
+    .then((res) => setComments(res))
+    .catch((err) => setCommentErr(err))
+    .finally(() => setLoadingComments(false));
+
   },[blogId]);
 
   if(error) {
@@ -44,7 +59,19 @@ const Blog = () => {
           </div>
       )}
         <section>
-          <h2>Comments: </h2>
+          <h2 className={styles.commentHeading}>Comments</h2>
+          {loadingComments == false && comments.length <= 0 ? (
+            <p>Looks like there are no comments...</p>
+          ) : null}
+        {loadingComments == true ? (
+          <p>Loading Comments...</p>
+        ) : (
+          <ul className={styles.BlogUl}>
+            {comments.map((comment) => <Comment key={comment.id} comment={comment} blogAuthor={blog.author.user.username}/>)}
+          </ul>
+        )}
+        {console.log()}
+
         </section>
       </main>      
     </div>

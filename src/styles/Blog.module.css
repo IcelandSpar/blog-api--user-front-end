@@ -27,3 +27,13 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+.commentHeading {
+  text-align: center;
+}
+
+.BlogUl {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
