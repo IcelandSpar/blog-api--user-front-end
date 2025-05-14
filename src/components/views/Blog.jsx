@@ -43,6 +43,9 @@ const Blog = () => {
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
           </div>
       )}
+        <section>
+          <h2>Comments: </h2>
+        </section>
       </main>      
     </div>
   )
