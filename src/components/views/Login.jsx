@@ -6,6 +6,7 @@ const Login = () => {
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const [jwt, setJwt] = useState(null);
+  const [loginErr, setLoginErr] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,10 +24,19 @@ const Login = () => {
     })
     .then((res) => res.json())
     .then((res) => {
+
+            
+      if(res.ok == undefined) {
+        setLoginErr(true);
+      }
       setJwt(res.token);
       localStorage.setItem('token', res.token);
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+
+
+      console.error(err)
+    })
     .finally(() => {
       if(localStorage.getItem('token') != 'undefined') {
         window.location = "http://localhost:5173/"
@@ -41,6 +51,11 @@ const Login = () => {
       <form>
         <fieldset>
           <legend>Login</legend>
+          {!loginErr ? null : (
+            <div>
+              <p>Username and password combination is incorrect. Please try again.</p>
+            </div>
+          )}
           <div>
             <label htmlFor="username">Username: </label>
             <input type="text" id="username" name="username" ref={usernameInputRef}/>
