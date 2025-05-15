@@ -1,0 +1,13 @@
+.labelAndInputCont {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.commentFormFieldset {
+  padding: 1rem;
+}
+
+.sendCommentBtn {
+  
+}

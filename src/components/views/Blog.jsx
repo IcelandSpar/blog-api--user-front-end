@@ -4,6 +4,7 @@ import { formatRelative } from 'date-fns'
 
 import Navbar from './partials/Navbar.jsx';
 import Comment from './partials/Comment.jsx';
+import CommentForm from './partials/CommentForm.jsx';
 
 import styles from '../../styles/Blog.module.css'
 
@@ -58,6 +59,7 @@ const Blog = () => {
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
           </div>
       )}
+        <CommentForm/>
         <section>
           <h2 className={styles.commentHeading}>Comments</h2>
           {loadingComments == false && comments.length <= 0 ? (
@@ -70,8 +72,6 @@ const Blog = () => {
             {comments.map((comment) => <Comment key={comment.id} comment={comment} blogAuthor={blog.author.user.username}/>)}
           </ul>
         )}
-        {console.log()}
-
         </section>
       </main>      
     </div>
