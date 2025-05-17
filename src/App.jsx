@@ -34,7 +34,7 @@ function App() {
   return (
     <>
     
-      <UserContext.Provider value={{isLoggedIn, loadingCommentForm, loadingCommentFormErr}}>
+      <UserContext.Provider value={{isLoggedIn, loadingCommentForm, loadingCommentFormErr, setIsLoggedIn}}>
         <RouterProvider router={router}/>
       </UserContext.Provider>
     </>

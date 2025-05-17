@@ -13,7 +13,9 @@ const Navbar = ({navStyle}) => {
       <nav className={styles.navbar}>
         <Link to='/'>Home</Link>
         <Link to='/blogs'>Blogs</Link>
-        {isLoggedIn ? null : <Link to='/login'>Login</Link>}
+        {isLoggedIn ? <Link to='/logout'>Log Out</Link> : <Link to='/login'>Login</Link>}
+        
+        
         
       </nav>
     </header>

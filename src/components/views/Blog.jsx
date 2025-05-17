@@ -71,7 +71,6 @@ const Blog = () => {
     );
   }
 
-  console.log(blog)
   return (
     <div className={styles.blogPage}>
       <Navbar navStyle={styles.navStyle}/>
