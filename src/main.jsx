@@ -11,7 +11,8 @@ import Login from './components/views/Login.jsx';
 import Blog from './components/views/Blog.jsx';
 import Authors from './components/views/Authors.jsx';
 
-const router = createBrowserRouter([
+
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <Home/>,
@@ -36,8 +37,8 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
+  
   <StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={router}/>
+    <App />
   </StrictMode>,
 )

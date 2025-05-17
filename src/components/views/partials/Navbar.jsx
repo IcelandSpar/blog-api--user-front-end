@@ -1,13 +1,20 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+import UserContext from '../../../UserContext';
+
 import styles from '../../../styles/Navbar.module.css';
 
 const Navbar = ({navStyle}) => {
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <header className={`${styles.headerNav} ${navStyle}`}>
       <nav className={styles.navbar}>
         <Link to='/'>Home</Link>
         <Link to='/blogs'>Blogs</Link>
-        <Link to='/login'>Login</Link>
+        {isLoggedIn ? null : <Link to='/login'>Login</Link>}
+        
       </nav>
     </header>
   )

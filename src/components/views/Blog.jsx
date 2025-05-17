@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { formatRelative } from 'date-fns'
+
+import UserContext from '../../UserContext.jsx';
 
 import Navbar from './partials/Navbar.jsx';
 import Comment from './partials/Comment.jsx';
@@ -10,6 +12,8 @@ import styles from '../../styles/Blog.module.css'
 
 const Blog = () => {
 
+  const { isLoggedIn, LoadingCommentForm, loadingCommentFormErr } = useContext(UserContext);
+
   const [blog, setBlog] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,9 +22,9 @@ const Blog = () => {
   const [commentErr, setCommentErr] = useState(null);
   const [loadingComments, setLoadingComments] = useState(true);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loadingCommentForm, setLoadingCommentForm] = useState(true);
-  const [loadingCommentFormErr, setLoadingCommentFormErr] = useState(null);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [loadingCommentForm, setLoadingCommentForm] = useState(true);
+  // const [loadingCommentFormErr, setLoadingCommentFormErr] = useState(null);
 
 
 
@@ -28,7 +32,7 @@ const Blog = () => {
   useEffect(() => {
     setLoading(true);
     setLoadingComments(true);
-    setLoadingCommentForm(true);
+    // setLoadingCommentForm(true);
     const token = localStorage.getItem('token');
 
 
@@ -39,18 +43,18 @@ const Blog = () => {
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
 
-    fetch(`http://localhost:3000/login/check-if-auth`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then((res) => res.json())
-    .then((res) => setIsLoggedIn(res.isAuth))
-    .catch((err) => {
-      setIsLoggedIn(false);
-      setLoadingCommentFormErr(err);
-    })
-    .finally(() => setLoadingCommentForm(false))
+    // fetch(`http://localhost:3000/login/check-if-auth`, {
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`
+    //   }
+    // })
+    // .then((res) => res.json())
+    // .then((res) => setIsLoggedIn(res.isAuth))
+    // .catch((err) => {
+    //   setIsLoggedIn(false);
+    //   setLoadingCommentFormErr(err);
+    // })
+    // .finally(() => setLoadingCommentForm(false))
 
 
     fetch(`http://localhost:3000/comments/${blogId}`)
