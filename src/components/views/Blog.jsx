@@ -18,17 +18,40 @@ const Blog = () => {
   const [commentErr, setCommentErr] = useState(null);
   const [loadingComments, setLoadingComments] = useState(true);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loadingCommentForm, setLoadingCommentForm] = useState(true);
+  const [loadingCommentFormErr, setLoadingCommentFormErr] = useState(null);
+
+
 
   const { blogId } = useParams();
   useEffect(() => {
     setLoading(true);
     setLoadingComments(true);
+    setLoadingCommentForm(true);
+    const token = localStorage.getItem('token');
+
+
 
     fetch(`http://localhost:3000/blogs/${blogId}`)
     .then((response) => response.json())
     .then((response) => setBlog(response))
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
+
+    fetch(`http://localhost:3000/login/check-if-auth`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then((res) => res.json())
+    .then((res) => setIsLoggedIn(res.isAuth))
+    .catch((err) => {
+      setIsLoggedIn(false);
+      setLoadingCommentFormErr(err);
+    })
+    .finally(() => setLoadingCommentForm(false))
+
 
     fetch(`http://localhost:3000/comments/${blogId}`)
     .then((res) => res.json())
@@ -59,7 +82,13 @@ const Blog = () => {
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
           </div>
       )}
-        <CommentForm/>
+      
+        {isLoggedIn ? <CommentForm/> : (
+          <div className={styles.mustBeLoggedInMsg}>
+            <p>You must be <Link to={'/login'}>logged in</Link> to make a comment.</p>
+            <p>Not a user yet? Create an account!</p>
+          </div>
+        )} 
         <section>
           <h2 className={styles.commentHeading}>Comments</h2>
           {loadingComments == false && comments.length <= 0 ? (

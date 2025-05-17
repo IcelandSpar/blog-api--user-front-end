@@ -37,3 +37,7 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+.mustBeLoggedInMsg {
+  text-align: center;
+}
