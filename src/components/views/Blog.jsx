@@ -22,17 +22,10 @@ const Blog = () => {
   const [commentErr, setCommentErr] = useState(null);
   const [loadingComments, setLoadingComments] = useState(true);
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [loadingCommentForm, setLoadingCommentForm] = useState(true);
-  // const [loadingCommentFormErr, setLoadingCommentFormErr] = useState(null);
-
-
-
   const { blogId } = useParams();
   useEffect(() => {
     setLoading(true);
     setLoadingComments(true);
-    // setLoadingCommentForm(true);
     const token = localStorage.getItem('token');
 
 
@@ -42,20 +35,6 @@ const Blog = () => {
     .then((response) => setBlog(response))
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
-
-    // fetch(`http://localhost:3000/login/check-if-auth`, {
-    //   headers: {
-    //     'Authorization': `Bearer ${token}`
-    //   }
-    // })
-    // .then((res) => res.json())
-    // .then((res) => setIsLoggedIn(res.isAuth))
-    // .catch((err) => {
-    //   setIsLoggedIn(false);
-    //   setLoadingCommentFormErr(err);
-    // })
-    // .finally(() => setLoadingCommentForm(false))
-
 
     fetch(`http://localhost:3000/comments/${blogId}`)
     .then((res) => res.json())
