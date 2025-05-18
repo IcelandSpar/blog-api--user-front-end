@@ -8,6 +8,7 @@ import Home from './components/views/Home.jsx';
 import Blogs from './components/views/Blogs.jsx';
 import Login from './components/views/Login.jsx';
 import Logout from './components/views/Logout.jsx';
+import Register from './components/views/Register.jsx';
 
 import Blog from './components/views/Blog.jsx';
 import Authors from './components/views/Authors.jsx';
@@ -28,7 +29,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/logout',
-    element: <Logout/>
+    element: <Logout/>,
+  },
+  {
+    path: '/register',
+    element: <Register/>,
   },
   {
     path: '/blogs/:blogId',

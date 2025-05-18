@@ -14,7 +14,7 @@ const Navbar = ({navStyle}) => {
         <Link to='/'>Home</Link>
         <Link to='/blogs'>Blogs</Link>
         {isLoggedIn ? <Link to='/logout'>Log Out</Link> : <Link to='/login'>Login</Link>}
-        
+        <Link to='/register'>Register</Link>
         
         
       </nav>
