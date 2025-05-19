@@ -1,14 +1,20 @@
 import { useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import styles from '../../../styles/CommentForm.module.css';
 
-const CommentForm = () => {
+const CommentForm = ({setComments, setCommentErr, setLoadingComments}) => {
 
   const commentTitleRef = useRef(null);
   const commentContentRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const { blogId } = useParams();
+
+  const redirect = () => {
+    navigate(0);
+  }
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +27,6 @@ const CommentForm = () => {
 
     const jwtToken = localStorage.getItem('token');
 
-
       await fetch('http://localhost:3000/comments/post-comment', {
         method: 'POST',
         body: new URLSearchParams(formData),
@@ -33,14 +38,16 @@ const CommentForm = () => {
       .catch((err) => {
         console.error(err);
       })
-      .finally(() => {
-        window.location.reload();
-      })
 
-
-
-
-    
+      await fetch(`http://localhost:3000/comments/${blogId}`)
+        .then((response) => response.json())
+        .then((response) => setComments(() => response))
+        .then(() => redirect())
+        .catch((err) => setCommentErr(err))
+        .finally(() => {
+          setLoadingComments(false);
+          navigate('/blogs')
+        });
 
   };
 
@@ -59,7 +66,6 @@ const CommentForm = () => {
           <textarea ref={commentContentRef} name="commentContent" id="commentContent"></textarea>
         </div>
         <button onClick={ handleCommentSubmit } className={styles.sendCommentBtn}>Send Comment</button>
-
       </fieldset>
 
     </form>

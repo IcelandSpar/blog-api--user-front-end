@@ -5,6 +5,7 @@ import { formatRelative } from 'date-fns'
 import UserContext from '../../UserContext.jsx';
 
 import Navbar from './partials/Navbar.jsx';
+import Comments from './partials/Comments.jsx';
 import Comment from './partials/Comment.jsx';
 import CommentForm from './partials/CommentForm.jsx';
 
@@ -19,13 +20,17 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
 
   const [comments, setComments] = useState(null);
-  const [commentErr, setCommentErr] = useState(null);
   const [loadingComments, setLoadingComments] = useState(true);
+  const [commentErr, setCommentErr] = useState(null);
 
-  const { blogId } = useParams();
+
+
+
+  let { blogId } = useParams();
   useEffect(() => {
     setLoading(true);
     setLoadingComments(true);
+
     const token = localStorage.getItem('token');
 
 
@@ -36,11 +41,12 @@ const Blog = () => {
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
 
+
     fetch(`http://localhost:3000/comments/${blogId}`)
     .then((res) => res.json())
-    .then((res) => setComments(res))
-    .catch((err) => setCommentErr(err))
-    .finally(() => setLoadingComments(false));
+    .then((res) => setComments(() => res))
+    .catch((err) => setCommentErr(() => err))
+    .finally(() => setLoadingComments(() => false));
 
   },[blogId]);
 
@@ -65,7 +71,7 @@ const Blog = () => {
           </div>
       )}
       
-        {isLoggedIn ? <CommentForm/> : (
+        {isLoggedIn ? <CommentForm setComments={setComments} setCommentErr={setCommentErr} setLoadingComments={setLoadingComments}/> : (
           <div className={styles.mustBeLoggedInMsg}>
             <p>You must be <Link to={'/login'}>logged in</Link> to make a comment.</p>
             <p>Not a user yet? Create an account!</p>
@@ -79,9 +85,7 @@ const Blog = () => {
         {loadingComments == true ? (
           <p>Loading Comments...</p>
         ) : (
-          <ul className={styles.BlogUl}>
-            {comments.map((comment) => <Comment key={comment.id} comment={comment} blogAuthor={blog.author.user.username}/>)}
-          </ul>
+          <Comments commentErr={commentErr} blog={blog} blogId={blogId} setLoadingComments={setLoadingComments} comments={comments} setComments={setComments} setCommentErr={setCommentErr} stylesComments={styles}/>
         )}
         </section>
       </main>      
