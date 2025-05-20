@@ -74,7 +74,7 @@ const Blog = () => {
         {isLoggedIn ? <CommentForm setComments={setComments} setCommentErr={setCommentErr} setLoadingComments={setLoadingComments}/> : (
           <div className={styles.mustBeLoggedInMsg}>
             <p>You must be <Link to={'/login'}>logged in</Link> to make a comment.</p>
-            <p>Not a user yet? Create an account!</p>
+            <p>Not a user yet? <Link to={'/register'}>Create an account!</Link></p>
           </div>
         )} 
         <section>

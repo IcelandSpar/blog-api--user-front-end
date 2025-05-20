@@ -52,8 +52,11 @@ const AuthForm = ({formType}) => {
     .finally(() => {
       if(localStorage.getItem('token') != undefined && formType == 'login') {
         window.location = "http://localhost:5173/"
-      } if(formType == 'register') {
+      } if(formType == 'register' && registerErr == true) {
         window.location = 'http://localhost:5173/login';
+      } else if(formType == 'register' && registerErr == false) {
+        return null
+
       }
     });
 
