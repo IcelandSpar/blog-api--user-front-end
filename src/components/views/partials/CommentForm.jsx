@@ -19,13 +19,16 @@ const CommentForm = ({setComments, setCommentErr, setLoadingComments}) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
-
     const formData = new FormData();
     formData.append('title', commentTitleRef.current.value);
     formData.append('comment', commentContentRef.current.value);
     formData.append('blogId', blogId);
 
     const jwtToken = localStorage.getItem('token');
+
+    setTimeout(() => {
+      redirect();
+    }, 1000)
 
       await fetch('http://localhost:3000/comments/post-comment', {
         method: 'POST',
@@ -38,17 +41,6 @@ const CommentForm = ({setComments, setCommentErr, setLoadingComments}) => {
       .catch((err) => {
         console.error(err);
       })
-
-      await fetch(`http://localhost:3000/comments/${blogId}`)
-        .then((response) => response.json())
-        .then((response) => setComments(() => response))
-        .then(() => redirect())
-        .catch((err) => setCommentErr(err))
-        .finally(() => {
-          setLoadingComments(false);
-          navigate('/blogs')
-        });
-
   };
 
 
