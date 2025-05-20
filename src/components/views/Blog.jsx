@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { formatRelative } from 'date-fns'
 
@@ -12,7 +12,7 @@ import CommentForm from './partials/CommentForm.jsx';
 import styles from '../../styles/Blog.module.css'
 
 const Blog = () => {
-
+  const timerInstance = useRef({timer: 0});
   const { isLoggedIn, LoadingCommentForm } = useContext(UserContext);
 
   const [blog, setBlog] = useState(null);
@@ -30,36 +30,67 @@ const Blog = () => {
 
   const token = localStorage.getItem('token');
 
+  const  sendCurrentLike = (currentState) => {
+    clearTimeout(timerInstance.current.timer);
+    timerInstance.current.timer = setTimeout(() => {
+      if(currentState != null) {
+        fetch(`http://localhost:3000/blogs/like-blog/${blogId}/${currentState}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      } else if (currentState == null) {
+        fetch(`http://localhost:3000/blogs/delete-like-blog/${blogId}/${currentState}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      }
+
+
+    }, 3000)
+  }
+
   const handleLike = (e) => {
+    let currentState = null;
     e.preventDefault();
     if(userLikeStatus == true) {
       setLike((prev) => prev - 1);
-      setUserLikeStatus(null)
+      setUserLikeStatus(() => null)
+      currentState = null;
     } else if(userLikeStatus == null) {
       setLike((prev) => prev + 1);
-      setUserLikeStatus(true)
+      setUserLikeStatus(() => true)
+      currentState = true;
     } else if (userLikeStatus == false) {
-      setUserLikeStatus(true);
+      setUserLikeStatus(() => true);
       setLike((prev) => prev + 1);
       setDislike((prev) => prev - 1);
+      currentState = true;
     }
-
-    
+   sendCurrentLike(currentState)
   };
 
   const handleDislike = (e) => {
     e.preventDefault();
+    let currentState = null;
     if(userLikeStatus == false) {
       setDislike((prev) => prev - 1);
-      setUserLikeStatus(null)
+      setUserLikeStatus(() => null)
+      currentState = null;
     } else if(userLikeStatus == null) {
       setDislike((prev) => prev + 1);
-      setUserLikeStatus(false);
+      setUserLikeStatus(() => false);
+      currentState = false;
     } else if (userLikeStatus == true) {
-      setUserLikeStatus(false);
+      setUserLikeStatus(() => false);
       setLike((prev) => prev - 1);
       setDislike((prev) => prev + 1);
+      currentState = false;
     }
+    sendCurrentLike(currentState)
   }
 
 
@@ -122,7 +153,6 @@ const Blog = () => {
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
             {!isLoggedIn ? null : (
             <div className={styles.blogLikeDislikeBtnCont}>
-              {console.log(blog)}
               <button onClick={handleLike} className={userLikeStatus == true ? styles.active : styles.notActive} type='button'>Like {like}</button>
               <button onClick={handleDislike} className={userLikeStatus == false ? styles.active : styles.notActive} type='button'>Dislike {dislike}</button>
             </div>
