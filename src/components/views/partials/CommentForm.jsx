@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import styles from '../../../styles/CommentForm.module.css';
 
-const CommentForm = ({setComments, setCommentErr, setLoadingComments}) => {
+const CommentForm = () => {
 
   const commentTitleRef = useRef(null);
   const commentContentRef = useRef(null);

@@ -53,14 +53,12 @@ const Blogs = () => {
                 <p>{blog.content}</p>
                 <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
                 <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
+                <p>Likes: {blog._count.UsersLikedBlogs}</p>
               </li>
             )
           })
           }
         </ul>
-        {/* <button onClick={() => {
-          return setCount((prevState) => prevState + 1);
-        }}>Count {count}</button> */}
       </main>
     </div>
   );

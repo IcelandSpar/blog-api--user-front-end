@@ -61,13 +61,17 @@ const Blog = () => {
       <Navbar navStyle={styles.navStyle}/>
       <main className={styles.blogsMainCont}>
         {loading ? <p>Blog Loading...</p> : null }
-      {!blog ? null : (
+      {blog == null ? null : (
           <div className={styles.blogContent}>
             <h1 className={styles.blogTitle}>{blog.title}</h1>
             <p>Written By: <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link></p>
             <p>{blog.content}</p>
             <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
+            <div>
+              <p>Likes: {blog._count.UsersLikedBlogs}</p>
+              <p>Dislikes: {blog.dislikes}</p>
+            </div>
           </div>
       )}
       
