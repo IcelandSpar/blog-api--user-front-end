@@ -32,6 +32,25 @@
   text-align: center;
 }
 
+.blogLikeDislikeBtnCont {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.active {
+  background-color: green;
+}
+
+.notActive {
+
+}
+
+.blogLikeDislikeBtnCont button {
+  font-size: 1.2rem;
+  padding: .5rem 1rem;
+}
+
 .BlogUl {
   display: flex;
   flex-direction: column;
@@ -41,3 +60,4 @@
 .mustBeLoggedInMsg {
   text-align: center;
 }
+

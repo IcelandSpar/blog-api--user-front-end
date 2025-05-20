@@ -13,7 +13,7 @@ import styles from '../../styles/Blog.module.css'
 
 const Blog = () => {
 
-  const { isLoggedIn, LoadingCommentForm, loadingCommentFormErr } = useContext(UserContext);
+  const { isLoggedIn, LoadingCommentForm } = useContext(UserContext);
 
   const [blog, setBlog] = useState(null);
   const [error, setError] = useState(null);
@@ -23,7 +23,44 @@ const Blog = () => {
   const [loadingComments, setLoadingComments] = useState(true);
   const [commentErr, setCommentErr] = useState(null);
 
+  const [ userLikeStatus, setUserLikeStatus ] = useState(null);
+  const [ like, setLike ] = useState(null);
+  const [ dislike, setDislike ] = useState(null);
 
+
+  const token = localStorage.getItem('token');
+
+  const handleLike = (e) => {
+    e.preventDefault();
+    if(userLikeStatus == true) {
+      setLike((prev) => prev - 1);
+      setUserLikeStatus(null)
+    } else if(userLikeStatus == null) {
+      setLike((prev) => prev + 1);
+      setUserLikeStatus(true)
+    } else if (userLikeStatus == false) {
+      setUserLikeStatus(true);
+      setLike((prev) => prev + 1);
+      setDislike((prev) => prev - 1);
+    }
+
+    
+  };
+
+  const handleDislike = (e) => {
+    e.preventDefault();
+    if(userLikeStatus == false) {
+      setDislike((prev) => prev - 1);
+      setUserLikeStatus(null)
+    } else if(userLikeStatus == null) {
+      setDislike((prev) => prev + 1);
+      setUserLikeStatus(false);
+    } else if (userLikeStatus == true) {
+      setUserLikeStatus(false);
+      setLike((prev) => prev - 1);
+      setDislike((prev) => prev + 1);
+    }
+  }
 
 
   let { blogId } = useParams();
@@ -31,16 +68,31 @@ const Blog = () => {
     setLoading(true);
     setLoadingComments(true);
 
-    const token = localStorage.getItem('token');
-
-
 
     fetch(`http://localhost:3000/blogs/${blogId}`)
     .then((response) => response.json())
-    .then((response) => setBlog(response))
+    .then((response) => {
+      setBlog(response);
+      setLike(response._count.UsersLikedBlogs);
+      setDislike(response.dislikes);
+    })
     .catch((error) => setError(error))
     .finally(() => setLoading(false));
 
+    if(isLoggedIn) {
+      fetch(`http://localhost:3000/blogs/${blogId}/check-user-like`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        if(res) {
+          setUserLikeStatus(res.like)
+        }
+      })
+      .catch((err) => console.error(err));
+    }
 
     fetch(`http://localhost:3000/comments/${blogId}`)
     .then((res) => res.json())
@@ -48,7 +100,7 @@ const Blog = () => {
     .catch((err) => setCommentErr(() => err))
     .finally(() => setLoadingComments(() => false));
 
-  },[blogId]);
+  },[blogId, token, isLoggedIn]);
 
   if(error) {
     return(
@@ -68,10 +120,13 @@ const Blog = () => {
             <p>{blog.content}</p>
             <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
-            <div>
-              <p>Likes: {blog._count.UsersLikedBlogs}</p>
-              <p>Dislikes: {blog.dislikes}</p>
+            {!isLoggedIn ? null : (
+            <div className={styles.blogLikeDislikeBtnCont}>
+              {console.log(blog)}
+              <button onClick={handleLike} className={userLikeStatus == true ? styles.active : styles.notActive} type='button'>Like {like}</button>
+              <button onClick={handleDislike} className={userLikeStatus == false ? styles.active : styles.notActive} type='button'>Dislike {dislike}</button>
             </div>
+            )}
           </div>
       )}
       

@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 const AuthForm = ({formType}) => {
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
-  const [jwt, setJwt] = useState(null);
   const [loginErr, setLoginErr] = useState(false);
   const [registerErr, setRegisterErr] = useState(false);
 
@@ -37,7 +36,6 @@ const AuthForm = ({formType}) => {
         if(res.token == undefined) {
           setLoginErr(true);
         } else {
-          setJwt(res.token);
           localStorage.setItem('token', res.token);
         }
       }

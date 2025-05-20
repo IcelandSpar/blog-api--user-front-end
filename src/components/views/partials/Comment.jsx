@@ -4,7 +4,7 @@ import { formatRelative } from 'date-fns'
 
 const Comment = ({comment, blogAuthor}) => {
   return (
-    <li>
+    <li className={styles}>
       <p>{comment.user.username}</p>
       <p>{comment.authorHeart ? `${blogAuthor} loved this Comment` : null}</p>
       <h3>{comment.commentTitle}</h3>

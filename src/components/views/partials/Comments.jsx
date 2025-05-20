@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import Comment from './Comment.jsx';
 
-const Comments = ({commentErr, stylesComments, setLoadingComments, comments, setComments, setCommentErr, blogId, blog}) => {
+const Comments = ({stylesComments, comments, blog}) => {
 
   if(blog != null) {
     return (

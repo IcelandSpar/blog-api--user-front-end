@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react';
 
 import Navbar from './partials/Navbar.jsx';
 import AuthForm from './partials/AuthForm.jsx';
