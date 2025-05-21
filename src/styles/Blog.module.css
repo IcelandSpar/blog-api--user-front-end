@@ -71,6 +71,17 @@
   padding: .5rem 1rem;
 }
 
+.updateCountPara {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cachedIcon {
+  animation: 1s spin infinite;
+}
+
 .BlogUl {
   display: flex;
   flex-direction: column;
@@ -79,5 +90,15 @@
 
 .mustBeLoggedInMsg {
   text-align: center;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 

@@ -12,9 +12,11 @@ import CommentForm from './partials/CommentForm.jsx';
 import styles from '../../styles/Blog.module.css';
 import thumbUp from '../../assets/thumb_up.svg';
 import thumbDown from '../../assets/thumb_down.svg';
+import cachedIcon from '../../assets/cached.svg';
 
 const Blog = () => {
   const timerInstance = useRef({timer: 0});
+  const updateCountTimerInst = useRef({timer: 3});
   const { isLoggedIn, LoadingCommentForm } = useContext(UserContext);
 
   const [blog, setBlog] = useState(null);
@@ -29,10 +31,16 @@ const Blog = () => {
   const [ like, setLike ] = useState(null);
   const [ dislike, setDislike ] = useState(null);
 
+  const [ updateCount, setUpdateCount ] = useState(null);
+
 
   const token = localStorage.getItem('token');
 
   const  sendCurrentLike = (currentState) => {
+    clearInterval(updateCountTimerInst.current.timer)
+
+    setUpdateCount(3);
+
     clearTimeout(timerInstance.current.timer);
     timerInstance.current.timer = setTimeout(() => {
       if(currentState != null) {
@@ -50,9 +58,18 @@ const Blog = () => {
           }
         });
       }
+    }, 3000);
+    let virtualTime = 3;
 
-
-    }, 3000)
+    updateCountTimerInst.current.timer = setInterval(() => {
+      if(virtualTime > 0) {
+        setUpdateCount((prev) => prev - 1);
+        virtualTime = virtualTime - 1;
+      } else {
+        setUpdateCount(null);
+        clearInterval(updateCountTimerInst.current.timer);
+      }
+    }, 1000);
   }
 
   const handleLike = (e) => {
@@ -154,10 +171,15 @@ const Blog = () => {
             <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
             {!isLoggedIn ? null : (
+              <>
             <div className={styles.blogLikeDislikeBtnCont}>
               <button onClick={handleLike} className={userLikeStatus == true ? styles.activeLike : styles.notActive} type='button'><img src={thumbUp} alt="like" className={userLikeStatus == true ? styles.activeSvg : styles.notActive}/> Like {like}</button>
               <button onClick={handleDislike} className={userLikeStatus == false ? styles.activeDislike : styles.notActive} type='button'><img src={thumbDown} alt="dislike"  className={userLikeStatus == false ? styles.activeSvg : styles.notActive}/> Dislike {dislike}</button>
             </div>
+            {updateCount == null ? null : (
+              <p className={styles.updateCountPara}>Updating in {updateCount} <img className={styles.cachedIcon} src={cachedIcon} alt="saving like status" /></p>
+            )}
+            </>
             )}
           </div>
       )}
