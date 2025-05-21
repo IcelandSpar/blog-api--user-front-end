@@ -9,7 +9,9 @@ import Comments from './partials/Comments.jsx';
 import Comment from './partials/Comment.jsx';
 import CommentForm from './partials/CommentForm.jsx';
 
-import styles from '../../styles/Blog.module.css'
+import styles from '../../styles/Blog.module.css';
+import thumbUp from '../../assets/thumb_up.svg';
+import thumbDown from '../../assets/thumb_down.svg';
 
 const Blog = () => {
   const timerInstance = useRef({timer: 0});
@@ -153,8 +155,8 @@ const Blog = () => {
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
             {!isLoggedIn ? null : (
             <div className={styles.blogLikeDislikeBtnCont}>
-              <button onClick={handleLike} className={userLikeStatus == true ? styles.active : styles.notActive} type='button'>Like {like}</button>
-              <button onClick={handleDislike} className={userLikeStatus == false ? styles.active : styles.notActive} type='button'>Dislike {dislike}</button>
+              <button onClick={handleLike} className={userLikeStatus == true ? styles.activeLike : styles.notActive} type='button'><img src={thumbUp} alt="like" className={userLikeStatus == true ? styles.activeSvg : styles.notActive}/> Like {like}</button>
+              <button onClick={handleDislike} className={userLikeStatus == false ? styles.activeDislike : styles.notActive} type='button'><img src={thumbDown} alt="dislike"  className={userLikeStatus == false ? styles.activeSvg : styles.notActive}/> Dislike {dislike}</button>
             </div>
             )}
           </div>

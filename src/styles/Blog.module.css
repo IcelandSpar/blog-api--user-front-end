@@ -36,10 +36,30 @@
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+  
 }
 
-.active {
+.blogLikeDislikeBtnCont button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  
+}
+
+.activeLike {
   background-color: green;
+  color: white;
+
+}
+
+.activeDislike {
+  background-color: red;
+  color: white;
+}
+
+.activeSvg {
+  filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(24deg) brightness(104%) contrast(93%);
+
 }
 
 .notActive {
