@@ -21,6 +21,7 @@ const CommentForm = () => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
+    if(commentTitleRef.current.value != '' || commentContentRef.current.value != '') {
     const formData = new FormData();
     formData.append('title', commentTitleRef.current.value);
     formData.append('comment', commentContentRef.current.value);
@@ -43,6 +44,7 @@ const CommentForm = () => {
       .catch((err) => {
         console.error(err);
       })
+    } 
   };
 
 
@@ -52,14 +54,15 @@ const CommentForm = () => {
         <legend>Send a Comment</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="commentTitle">Comment Title: </label>
-          <input ref={commentTitleRef} className={styles.commentTitleInput} type="text" id="commentTitle" name="commentTitle" />
+          <input ref={commentTitleRef} className={styles.commentTitleInput} type="text" id="commentTitle" name="commentTitle" required/>
         </div>
 
         <div className={styles.labelAndInputCont}>
           <label htmlFor="commentContent">Comment: </label>
-          <textarea ref={commentContentRef} className={styles.commentContentTextArea} name="commentContent" id="commentContent"></textarea>
+          <textarea ref={commentContentRef} className={styles.commentContentTextArea} name="commentContent" id="commentContent" required></textarea>
         </div>
         <button onClick={ handleCommentSubmit } className={styles.sendCommentBtn}><p>Send</p><img src={sendIcon} alt="send comment" width='30px' height='30px'/></button>
+        {/* <a href="https://www.flaticon.com/free-icons/send" title="send icons">Send icons created by Freepik - Flaticon</a> */}
       </fieldset>
 
     </form>
