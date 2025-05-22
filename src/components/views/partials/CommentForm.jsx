@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import styles from '../../../styles/CommentForm.module.css';
 
+import sendIcon from '../../../assets/send.png'
+
 const CommentForm = () => {
 
   const commentTitleRef = useRef(null);
@@ -50,14 +52,14 @@ const CommentForm = () => {
         <legend>Send a Comment</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="commentTitle">Comment Title: </label>
-          <input ref={commentTitleRef} type="text" id="commentTitle" name="commentTitle" />
+          <input ref={commentTitleRef} className={styles.commentTitleInput} type="text" id="commentTitle" name="commentTitle" />
         </div>
 
         <div className={styles.labelAndInputCont}>
           <label htmlFor="commentContent">Comment: </label>
-          <textarea ref={commentContentRef} name="commentContent" id="commentContent"></textarea>
+          <textarea ref={commentContentRef} className={styles.commentContentTextArea} name="commentContent" id="commentContent"></textarea>
         </div>
-        <button onClick={ handleCommentSubmit } className={styles.sendCommentBtn}>Send Comment</button>
+        <button onClick={ handleCommentSubmit } className={styles.sendCommentBtn}><p>Send</p><img src={sendIcon} alt="send comment" width='30px' height='30px'/></button>
       </fieldset>
 
     </form>
