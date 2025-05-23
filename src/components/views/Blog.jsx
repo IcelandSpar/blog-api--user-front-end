@@ -8,6 +8,7 @@ import Navbar from './partials/Navbar.jsx';
 import Comments from './partials/Comments.jsx';
 import Comment from './partials/Comment.jsx';
 import CommentForm from './partials/CommentForm.jsx';
+import CommentDropdown from './partials/CommentDropdown.jsx';
 
 import styles from '../../styles/Blog.module.css';
 import thumbUp from '../../assets/thumb_up.svg';
@@ -183,7 +184,7 @@ const Blog = () => {
             )}
           </div>
       )}
-      
+        {isLoggedIn ? <CommentDropdown/> : null}
         {isLoggedIn ? <CommentForm setComments={setComments} setCommentErr={setCommentErr} setLoadingComments={setLoadingComments}/> : (
           <div className={styles.mustBeLoggedInMsg}>
             <p>You must be <Link to={'/login'}>logged in</Link> to make a comment.</p>
