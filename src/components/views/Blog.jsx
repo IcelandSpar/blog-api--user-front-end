@@ -125,7 +125,6 @@ const Blog = () => {
       })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         setComments(() => res)
       })
     } else if (e.target.value == 'Most Liked') {
@@ -136,7 +135,6 @@ const Blog = () => {
       })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         setComments(() => res)
       })
     } else if (e.target.value == 'Oldest') {
@@ -147,7 +145,6 @@ const Blog = () => {
       })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         setComments(() => res)
       })
     }
@@ -232,7 +229,7 @@ const Blog = () => {
           </div>
         )} 
         <section>
-        {isLoggedIn ? <CommentDropdown dropDownStyle={styles} handleChange={handleCommentSelectChange} reference={commentSelectInput}/> : null}
+        {isLoggedIn && comments != null > 0 ? <CommentDropdown dropDownStyle={styles} handleChange={handleCommentSelectChange} reference={commentSelectInput}/> : null}
           <h2 className={styles.commentHeading}>Comments</h2>
           {loadingComments == false && comments.length <= 0 ? (
             <p>Looks like there are no comments...</p>
