@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-const AuthForm = ({formType}) => {
+const AuthForm = ({formType, styles}) => {
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const [loginErr, setLoginErr] = useState(false);
@@ -62,9 +62,9 @@ const AuthForm = ({formType}) => {
 
 
   return (
-    <form>
+    <form className={styles.authForm}>
 
-    <fieldset>
+    <fieldset className={styles.formFieldSet}>
       <legend>{formType[0].toUpperCase() + formType.slice(1)}</legend>
       {!registerErr ? null : (
         <div>
@@ -76,16 +76,16 @@ const AuthForm = ({formType}) => {
           <p>Username and password combination is incorrect. Please try again.</p>
         </div>
       )}
-      <div>
+      <div className={styles.inputAndLabelCont}>
         <label htmlFor="username">Username: </label>
-        <input type="text" id="username" name="username" ref={usernameInputRef}/>
+        <input type="text" id="username" name="username" ref={usernameInputRef} className={styles.formInputs}/>
       </div>
 
-      <div>
+      <div className={styles.inputAndLabelCont}>
         <label htmlFor="password">Pasword: </label>
-        <input type="password" id="password" name="password" ref={passwordInputRef}/>
+        <input type="password" id="password" name="password" ref={passwordInputRef} className={styles.formInputs}/>
       </div>
-      <button onClick={handleLogin}>{formType[0].toUpperCase() + formType.slice(1)}</button>
+      <button onClick={handleLogin} className={styles.formBtn}>{formType[0].toUpperCase() + formType.slice(1)}</button>
     </fieldset>
   </form>
   )

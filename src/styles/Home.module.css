@@ -1,0 +1,5 @@
+.navStyle {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+  justify-self: center;
+}

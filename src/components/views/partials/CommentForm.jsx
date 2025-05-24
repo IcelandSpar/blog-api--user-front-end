@@ -61,7 +61,7 @@ const CommentForm = () => {
           <label htmlFor="commentContent">Comment: </label>
           <textarea ref={commentContentRef} className={styles.commentContentTextArea} name="commentContent" id="commentContent" required></textarea>
         </div>
-        <button onClick={ handleCommentSubmit } className={styles.sendCommentBtn}><p>Send</p><img src={sendIcon} alt="send comment" width='30px' height='30px'/></button>
+        <button onClick={ handleCommentSubmit } className={styles.sendCommentBtn}><p>Send</p><img src={sendIcon} className={styles.commentFormBtnIcon} alt="send comment" width='30px' height='30px'/></button>
         {/* <a href="https://www.flaticon.com/free-icons/send" title="send icons">Send icons created by Freepik - Flaticon</a> */}
       </fieldset>
 
