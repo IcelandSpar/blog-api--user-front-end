@@ -19,6 +19,7 @@ const Blog = () => {
   const timerInstance = useRef({timer: 0});
   const updateCountTimerInst = useRef({timer: 3});
   const { isLoggedIn, LoadingCommentForm } = useContext(UserContext);
+  const commentSelectInput = useRef(null);
 
   const [blog, setBlog] = useState(null);
   const [error, setError] = useState(null);
@@ -33,6 +34,7 @@ const Blog = () => {
   const [ dislike, setDislike ] = useState(null);
 
   const [ updateCount, setUpdateCount ] = useState(null);
+
 
 
   const token = localStorage.getItem('token');
@@ -113,6 +115,45 @@ const Blog = () => {
     sendCurrentLike(currentState)
   }
 
+  const handleCommentSelectChange = async (e) => {
+    e.preventDefault();
+    if(e.target.value == 'Latest') {
+      await fetch(`http://localhost:3000/comments/${blogId}?sort=date&direction=desc`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        setComments(() => res)
+      })
+    } else if (e.target.value == 'Most Liked') {
+      await fetch(`http://localhost:3000/comments/${blogId}?sort=likes&direction=desc`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        setComments(() => res)
+      })
+    } else if (e.target.value == 'Oldest') {
+      await fetch(`http://localhost:3000/comments/${blogId}?sort=date&direction=asc`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        setComments(() => res)
+      })
+    }
+    
+  };
+
 
   let { blogId } = useParams();
   useEffect(() => {
@@ -184,7 +225,6 @@ const Blog = () => {
             )}
           </div>
       )}
-        {isLoggedIn ? <CommentDropdown/> : null}
         {isLoggedIn ? <CommentForm setComments={setComments} setCommentErr={setCommentErr} setLoadingComments={setLoadingComments}/> : (
           <div className={styles.mustBeLoggedInMsg}>
             <p>You must be <Link to={'/login'}>logged in</Link> to make a comment.</p>
@@ -192,6 +232,7 @@ const Blog = () => {
           </div>
         )} 
         <section>
+        {isLoggedIn ? <CommentDropdown dropDownStyle={styles} handleChange={handleCommentSelectChange} reference={commentSelectInput}/> : null}
           <h2 className={styles.commentHeading}>Comments</h2>
           {loadingComments == false && comments.length <= 0 ? (
             <p>Looks like there are no comments...</p>

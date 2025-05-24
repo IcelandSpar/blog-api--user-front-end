@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import {  } from 'react';
 
-const CommentDropdown = () => {
-  const [ dropDownVal, setDropDownVal ] = useState(null);
-  const [ isDropDownOpen, setDropDownOpen ] = useState(false);
+const CommentDropdown = ({dropDownStyle, handleChange}) => {
+
   return (
     <>
-    <div>
-      <button>Latest</button>
-      <button>Most Liked</button>
-      <button>Oldest</button>
+    <div className={dropDownStyle.dropDownCont}>
+      <select className={dropDownStyle.dropDownSelect} onChange={handleChange}>
+        <option value="Latest">Latest</option>
+        <option value="Most Liked">Most Liked</option>
+        <option value="Oldest">Oldest</option>
+      </select>
     </div>
     </>
   )
