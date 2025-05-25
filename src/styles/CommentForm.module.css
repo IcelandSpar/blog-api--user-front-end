@@ -2,7 +2,7 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .commentFormFieldset {
@@ -12,6 +12,10 @@
   gap: 1rem;
   border-radius: 15px;
 
+}
+
+.fieldsetLegend {
+  font-size: 1.5rem;
 }
 
 .commentContentTextArea, .commentTitleInput {
@@ -31,13 +35,23 @@
   font-size: 1.5rem;
   align-items: center;
   cursor: pointer;
-  background-color: blue;
-  color: white;
   border-radius: 30px;
   font-weight: 800;
   border: none;
+  transition: color .3s linear,   background-color .3s linear, filter .3s linear;
+  
 }
 
 .commentFormBtnIcon {
+}
+
+.sendCommentBtn:hover {
+  color: white;
+  background-color: blue;
+
+}
+
+.sendCommentBtn:hover .commentFormBtnIcon {
   filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(24deg) brightness(104%) contrast(93%);
+
 }

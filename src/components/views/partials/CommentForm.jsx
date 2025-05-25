@@ -51,7 +51,7 @@ const CommentForm = () => {
   return (
     <form>
       <fieldset className={styles.commentFormFieldset}>
-        <legend>Send a Comment</legend>
+        <legend className={styles.fieldsetLegend}>Send a Comment</legend>
         <div className={styles.labelAndInputCont}>
           <label htmlFor="commentTitle">Comment Title: </label>
           <input ref={commentTitleRef} className={styles.commentTitleInput} type="text" id="commentTitle" name="commentTitle" required/>

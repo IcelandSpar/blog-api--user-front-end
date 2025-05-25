@@ -17,7 +17,7 @@ const Authors = () => {
 
     fetch(`http://localhost:3000/author/about/${authorId}`)
     .then((res) => res.json())
-    .then((res) => setAuthor((prev) => res))
+    .then((res) => setAuthor(res))
     .catch((err) => console.error(err))
     .finally(() => setLoadingAuthor(false));
   }, [authorId])
