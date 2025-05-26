@@ -1,5 +1,35 @@
+.homePage {
+
+}
+
 .navStyle {
-  grid-column: 1 / 4;
-  grid-row: 1 / 2;
+
   justify-self: center;
+}
+
+.homeMainCont {
+
+
+  display: flex;
+  gap: 1rem;
+  width: 85%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.imgParaCont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  height: min-content;
+  margin: 1rem 0;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.firstContImg {
+  object-fit: contain;
+  width: 300px;
+  border-radius: 15px;
 }
