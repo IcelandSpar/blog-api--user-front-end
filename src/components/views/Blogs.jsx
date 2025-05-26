@@ -4,6 +4,8 @@ import { formatRelative } from 'date-fns';
 
 import Navbar from './partials/Navbar';
 
+import likesIcon from '../../assets/thumb_up.svg';
+
 import styles from '../../styles/Blogs.module.css'
 
 const Blogs = () => {
@@ -47,13 +49,16 @@ const Blogs = () => {
           !blogs ? null : blogs.map((blog) => {
 
             return (
-              <li key={blog.id}>
+              <li key={blog.id} className={styles.blogListItemCont}>
                 <Link to={'/blogs/' + blog.id}><h2>{blog.title}</h2></Link>
-                <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link>
-                <p>{blog.content}</p>
+                <p>By: <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link>
+                </p>
                 <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
                 <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
-                <p>Likes: {blog._count.UsersLikedBlogs}</p>
+                <div className={styles.likesCont}>
+                  <img className={styles.likesIcon} src={likesIcon} alt="likes" />
+                  <p>{blog._count.UsersLikedBlogs}</p>
+                </div>
               </li>
             )
           })
