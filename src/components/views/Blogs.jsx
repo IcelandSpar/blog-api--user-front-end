@@ -41,7 +41,7 @@ const Blogs = () => {
     <div className={styles.blogsPage}>
     <Navbar  navStyle={styles.blogsNavBar}/>
       <main className={styles.blogsMainCont}>
-        <h1>Blogs: </h1>
+        <h1 className={styles.blogsHeading}>Blogs</h1>
         <ul className={styles.blogsUl}>
           {loading ? <p>Blogs are loading in...</p> : null}
           {

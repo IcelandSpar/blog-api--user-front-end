@@ -2,6 +2,8 @@ import styles from '../../../styles/Comments.module.css';
 import { formatRelative } from 'date-fns';
 
 import bookmarkHeart from '../../../assets/bookmark_heart.svg';
+import likeIcon from '../../../assets/thumb_up.svg';
+import dislikeIcon from '../../../assets/thumb_down.svg';
 
 
 const Comment = ({comment, blogAuthor}) => {
@@ -21,10 +23,23 @@ const Comment = ({comment, blogAuthor}) => {
         </div>
       </div>
       <p>{comment.comment}</p>
-      <p>Upvotes: {comment.likes}</p>
-      <p>Downvotes: {comment.dislikes}</p>
-      <p>Posted: {formatRelative(comment.createdAt, new Date())}</p>
-      <p>Edited: {formatRelative(comment.modifiedAt, new Date())}</p>
+      <div className={styles.postedAndLikeCont}>
+        <div className={styles.postedTimeStamps}>
+          <p>Posted: {formatRelative(comment.createdAt, new Date())}</p>
+          {formatRelative(comment.createdAt, new Date()) == formatRelative(comment.modifiedAt, new Date()) ? null :           <p>Edited: {formatRelative(comment.modifiedAt, new Date())}</p>
+        }
+        </div>
+        <div className={styles.commentLikeAndDislikeCont}>
+          <div className={styles.likeAndParaCont}>
+            <img className={styles.likeIcon} src={likeIcon} alt="like" />
+            <p>{comment.likes}</p>
+          </div>
+          <div className={styles.likeAndParaCont}>
+            <img className={styles.likeIcon} src={dislikeIcon} alt="dislike" />
+            <p>{comment.dislikes}</p>
+          </div>
+        </div>
+      </div>
     </li>
   )
 };
