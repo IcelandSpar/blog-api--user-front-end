@@ -30,14 +30,14 @@ const Comment = ({comment, blogAuthor}) => {
         }
         </div>
         <div className={styles.commentLikeAndDislikeCont}>
-          <div className={styles.likeAndParaCont}>
+          <button className={styles.likeAndParaBtn}>
             <img className={styles.likeIcon} src={likeIcon} alt="like" />
             <p>{comment.likes}</p>
-          </div>
-          <div className={styles.likeAndParaCont}>
+          </button>
+          <button className={styles.likeAndParaBtn}>
             <img className={styles.likeIcon} src={dislikeIcon} alt="dislike" />
             <p>{comment.dislikes}</p>
-          </div>
+          </button>
         </div>
       </div>
     </li>

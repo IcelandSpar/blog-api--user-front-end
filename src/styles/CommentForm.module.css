@@ -39,19 +39,83 @@
   font-weight: 800;
   border: none;
   transition: color .3s linear,   background-color .3s linear, filter .3s linear;
-  
+  position: relative;
+  overflow: hidden;
 }
 
 .commentFormBtnIcon {
+  position: absolute;
+  right: -40px;
+
 }
 
-.sendCommentBtn:hover {
+.sendCommentBtn:hover .commentFormBtnIcon {
+  animation: .5s slide-in forwards;
+}
+
+
+.sendCommentBtn:hover{
   color: white;
   background-color: blue;
-
+  animation: .5s grow forwards;
 }
 
 .sendCommentBtn:hover .commentFormBtnIcon {
   filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(24deg) brightness(104%) contrast(93%);
 
+}
+
+.sendCommentBtn:not(:hover) .commentFormBtnIcon {
+  animation: .5s slide-out forwards;
+}
+
+
+.sendCommentBtn:not(:hover) {
+  color: white;
+  background-color: blue;
+  animation: .5s shrink forwards;
+
+
+}
+
+@keyframes slide-in {
+  from {
+    right: -40px;
+  }
+
+  to {
+    right: 20px;
+  }
+}
+
+@keyframes grow {
+  from {
+    width: 105.48px;
+  }
+
+  to {
+    width: 140px;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    right: 20px;
+  }
+
+  to {
+    right: -40px;
+  }
+}
+
+@keyframes shrink {
+  from {
+    width: 140px;
+  }
+
+  to {
+    width: 105.48px;
+    background-color: whitesmoke;
+    color: black;
+  }
 }
