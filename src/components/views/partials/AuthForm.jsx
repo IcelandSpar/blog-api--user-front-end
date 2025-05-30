@@ -8,6 +8,7 @@ const AuthForm = ({formType, styles}) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    let isThereLoginErr = false;
     const formData = new FormData();
     formData.append('username', usernameInputRef.current.value);
     formData.append('password', passwordInputRef.current.value);
@@ -22,18 +23,21 @@ const AuthForm = ({formType, styles}) => {
     })
     .then((res) => {
       if(!res.ok && formType == 'login') {
+        isThereLoginErr = true;
         setLoginErr(true);
       } else if(!res.ok && formType == 'register') {
         setRegisterErr(true);
       } else if(res.ok) {
         setRegisterErr(false);
         setLoginErr(false);
+        isThereLoginErr = false
       }
       return res.json()})
     .then((res) => {
       
       if(formType == 'login') {
         if(res.token == undefined) {
+          isThereLoginErr = true
           setLoginErr(true);
         } else {
           localStorage.setItem('token', res.token);
@@ -48,14 +52,19 @@ const AuthForm = ({formType, styles}) => {
       console.error(err)
     })
     .finally(() => {
-      if(localStorage.getItem('token') != undefined && formType == 'login') {
-        window.location = "http://localhost:5173/"
-      } if(formType == 'register' && registerErr == true) {
-        window.location = 'http://localhost:5173/login';
-      } else if(formType == 'register' && registerErr == false) {
+      if(isThereLoginErr == true) {
         return null
-
+      } else {
+        if(localStorage.getItem('token') != undefined && formType == 'login') {
+          window.location = "http://localhost:5173/"
+        } if(formType == 'register' && registerErr == true) {
+          window.location = 'http://localhost:5173/login';
+        } else if(formType == 'register' && registerErr == false) {
+          return null
+  
+        }
       }
+
     });
 
   };

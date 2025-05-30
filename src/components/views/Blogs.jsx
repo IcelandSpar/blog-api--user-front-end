@@ -63,8 +63,10 @@ const Blogs = () => {
                 <Link to={'/blogs/' + blog.id}><h2>{blog.title}</h2></Link>
                 <p>By: <Link to={`/authors/${blog.authorId}`} className={'authorsLink'}>{blog.author.user.username}</Link>
                 </p>
-                <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
-                <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
+                <div>
+                  <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
+                  <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
+                </div>
                 <div className={styles.likesCont}>
                   <img className={styles.likesIcon} src={likesIcon} alt="likes" />
                   <p>{blog._count.UsersLikedBlogs}</p>

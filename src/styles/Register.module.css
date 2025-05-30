@@ -50,6 +50,7 @@
   align-self: flex-end;
   border-radius: 30px;
   border: none;
+  cursor: pointer;
 }
 
 @media (max-width: 800px) {
