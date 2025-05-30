@@ -1,4 +1,4 @@
-import {  useState, useEffect } from 'react';
+import {  useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { formatRelative } from 'date-fns';
 
@@ -13,6 +13,16 @@ const Blogs = () => {
   const [loading, setLoading] = useState(true);
 
   const [blogs, setBlogs] = useState([]);
+
+
+
+  const redirectHandler = (indx, e) => {
+    e.preventDefault();
+    if(e.target.className != 'authorsLink') {
+      console.log(e.target.className, indx)
+    window.location.href =  '/blogs/' + (document.querySelector(`.blogListItem${indx}`).classList[1])
+  }
+  };
 
   useEffect(() => {
 
@@ -46,12 +56,12 @@ const Blogs = () => {
           {loading ? <p>Blogs are loading in...</p> : null}
           {
             
-          !blogs ? null : blogs.map((blog) => {
+          !blogs ? null : blogs.map((blog, indx) => {
 
             return (
-              <li key={blog.id} className={styles.blogListItemCont}>
+              <li key={blog.id} className={`${styles.blogListItemCont} ${blog.id} blogListItem${indx}`} onClick={(e) => redirectHandler(indx, e)}>
                 <Link to={'/blogs/' + blog.id}><h2>{blog.title}</h2></Link>
-                <p>By: <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link>
+                <p>By: <Link to={`/authors/${blog.authorId}`} className={'authorsLink'}>{blog.author.user.username}</Link>
                 </p>
                 <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
                 <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>

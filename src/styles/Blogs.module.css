@@ -38,10 +38,18 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  border: 1px solid whitesmoke;
+  border: 2px solid whitesmoke;
   padding: 1rem;
   border-radius: 15px;
   background-color:rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform .3s ease-out, box-shadow .3s ease-out;
+
+}
+
+.blogListItemCont:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .likesCont {
