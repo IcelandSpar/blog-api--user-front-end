@@ -1,4 +1,4 @@
-import {  useState, useEffect, useRef } from 'react';
+import {  useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatRelative } from 'date-fns';
 
@@ -57,7 +57,7 @@ const Blogs = () => {
     return (
       <div>
        <Navbar/>
-        <p>Something went wrong : (</p>
+        <p>Something went wrong : {'('}</p>
       </div>
     )
   }

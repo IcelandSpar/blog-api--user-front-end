@@ -1,35 +1,79 @@
 .homePage {
-
+  display: grid;
+  grid-template-columns: .5fr 3fr .5fr;
+  grid-template-rows: .5fr 10fr;
 }
 
 .navStyle {
-
+  padding: none;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  align-self: center;
   justify-self: center;
 }
 
 .homeMainCont {
-
-
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
   width: 85%;
   max-width: 1000px;
   margin: 0 auto;
+  grid-column: 2 / 3;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+}
+
+.homeFrontPageSect {
+
+}
+
+.frontPageImg {
+  rotate: 10deg;
+  border-radius: 15px;
 }
 
 .imgParaCont {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 2rem;
+  text-align: center;
   align-items: center;
   gap: 1rem;
-  height: min-content;
-  margin: 1rem 0;
-  text-align: center;
-  margin: 0 auto;
+  justify-items: center;
 }
 
 .firstContImg {
   object-fit: contain;
-  width: 300px;
+  width: 100%;
   border-radius: 15px;
+}
+
+
+
+@media (max-width: 800px) {
+  .homePage {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10fr;
+  }
+
+  .navStyle {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  .homeMainCont {
+    grid-column: 1 / 2;
+  }
+
+  .imgParaCont {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .imgParaCont {
+    font-size: 1rem;
+  }
 }
