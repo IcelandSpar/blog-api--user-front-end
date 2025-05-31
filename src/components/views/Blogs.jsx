@@ -14,7 +14,23 @@ const Blogs = () => {
 
   const [blogs, setBlogs] = useState([]);
 
+  const sortHandler = async (e) => {
+    setLoading(true)
+    if(e.target.value == 'latest' || e.target.value == 'oldest') {
+    await fetch(`http://localhost:3000/blogs/preview?sort=date&direction=${e.target.value == 'latest' ? 'desc' : 'asc'}`)
+    .then((res) => res.json())
+    .then((res) => setBlogs(res))
+    .catch((err) => setError(err))
+    .finally(() => setLoading(false))
+    } else if (e.target.value == 'mostLiked') {
+      await fetch(`http://localhost:3000/blogs/preview?sort=likes&direction=desc`)
+      .then((res) => res.json())
+      .then((res) => setBlogs(res))
+      .catch((err) => setError(err))
+      .finally(() => setLoading(false))
+    }
 
+  }
 
   const redirectHandler = (indx, e) => {
     e.preventDefault();
@@ -51,7 +67,14 @@ const Blogs = () => {
     <div className={styles.blogsPage}>
     <Navbar  navStyle={styles.blogsNavBar}/>
       <main className={styles.blogsMainCont}>
+        <div className={styles.titleAndSelectCon}>
         <h1 className={styles.blogsHeading}>Blogs</h1>
+        <select className={styles.dropDownSelect} onChange={sortHandler}>
+          <option value="latest">Latest</option>
+          <option value="oldest">Oldest</option>
+          <option value="mostLiked">Most Liked</option>
+        </select>
+        </div>
         <ul className={styles.blogsUl}>
           {loading ? <p>Blogs are loading in...</p> : null}
           {

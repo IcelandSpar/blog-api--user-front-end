@@ -102,10 +102,27 @@
   text-align: center;
 }
 
+.commentsTitleAndDropDownCont {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+}
+
+.commentHeading {
+  grid-column: 2 / 3;
+}
+
 .dropDownSelect {
   padding: .5rem 1rem;
   font-size: 1.2rem;
+  margin: 1rem 0;
+  color: white;
+  background-color: transparent;
+  border: 2px solid gray;
+}
 
+.dropDownSelect option {
+  background-color: #432E54;
 }
 
 

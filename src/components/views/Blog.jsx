@@ -229,8 +229,10 @@ const Blog = () => {
           </div>
         )} 
         <section>
-        {isLoggedIn && comments != null > 0 ? <CommentDropdown dropDownStyle={styles} handleChange={handleCommentSelectChange} reference={commentSelectInput}/> : null}
-          <h2 className={styles.commentHeading}>Comments</h2>
+          <div className={styles.commentsTitleAndDropDownCont}>
+            <h2 className={styles.commentHeading}>Comments</h2>
+            {isLoggedIn && comments != null > 0 ? <CommentDropdown dropDownStyle={styles} handleChange={handleCommentSelectChange} reference={commentSelectInput}/> : null}
+          </div>
           {loadingComments == false && comments.length <= 0 ? (
             <p>Looks like there are no comments...</p>
           ) : null}
