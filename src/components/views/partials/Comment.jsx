@@ -27,7 +27,6 @@ const Comment = ({comment, blogAuthor}) => {
         </div>
       </div>
       <p>{comment.comment}</p>
-      <p>{console.log(comment)}</p>
       <div className={styles.postedAndLikeCont}>
         <div className={styles.postedTimeStamps}>
           <p>Posted: {formatRelative(comment.createdAt, new Date())}</p>
@@ -37,11 +36,11 @@ const Comment = ({comment, blogAuthor}) => {
         <div className={styles.commentLikeAndDislikeCont}>
           <button className={styles.likeAndParaBtn}>
             <img className={styles.likeIcon} src={likeIcon} alt="like" />
-            <p>{comment.likes}</p>
+            <p>{comment.UserLikedComments.length}</p>
           </button>
           <button className={styles.likeAndParaBtn}>
             <img className={styles.likeIcon} src={dislikeIcon} alt="dislike" />
-            <p>{comment.dislikes}</p>
+            <p>{comment._count.UserLikedComments}</p>
           </button>
         </div>
       </div>

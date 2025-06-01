@@ -100,6 +100,10 @@
 
 .mustBeLoggedInMsg {
   text-align: center;
+  margin-top: 1rem;
+  border-top: .5px solid rgba(245, 245, 245, 0.747);
+  border-bottom: .5px solid rgba(245, 245, 245, 0.747);
+  padding: 1rem 0;
 }
 
 .commentsTitleAndDropDownCont {
