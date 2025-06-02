@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import styles from '../../../styles/Comments.module.css';
 import { formatRelative } from 'date-fns';
@@ -11,6 +11,44 @@ import UserContext from '../../../UserContext';
 
 const Comment = ({comment, blogAuthor}) => {
   const { isLoggedIn } = useContext(UserContext);
+  const [ like, setLike ] = useState(comment.UserLikedComments.length);
+  const [ dislike, setDislike ] = useState(comment._count.UserLikedComments);
+  const [ userCurrentLikeStatus, setUserCurrentLikeStatus ] = useState(null);
+
+  const handleLike = (e) => {
+    e.preventDefault();
+    if(isLoggedIn) {
+      if(userCurrentLikeStatus == null) {
+        setLike((prev) => prev + 1)
+        setUserCurrentLikeStatus(true);
+      } else if(userCurrentLikeStatus == false) {
+        setDislike((prev) => prev - 1)
+        setLike((prev) => prev + 1);
+        setUserCurrentLikeStatus(true);
+      } else if (userCurrentLikeStatus == true) {
+        setLike((prev) => prev - 1);
+        setUserCurrentLikeStatus(null);
+      }
+    }
+
+  };
+
+  const handleDislike = (e) => {
+    e.preventDefault();
+    if(isLoggedIn) {
+      if(userCurrentLikeStatus == null) {
+        setDislike((prev) => prev + 1);
+        setUserCurrentLikeStatus(false);
+      } else if (userCurrentLikeStatus == true) {
+        setLike((prev) => prev - 1);
+        setDislike((prev) => prev + 1);
+        setUserCurrentLikeStatus(false);
+      } else if (userCurrentLikeStatus == false) {
+        setDislike((prev) => prev - 1);
+        setUserCurrentLikeStatus(null);
+      }
+    }
+  };
 
   return (
     <li className={styles.listItemCont}>
@@ -30,17 +68,17 @@ const Comment = ({comment, blogAuthor}) => {
       <div className={styles.postedAndLikeCont}>
         <div className={styles.postedTimeStamps}>
           <p>Posted: {formatRelative(comment.createdAt, new Date())}</p>
-          {formatRelative(comment.createdAt, new Date()) == formatRelative(comment.modifiedAt, new Date()) ? null :           <p>Edited: {formatRelative(comment.modifiedAt, new Date())}</p>
+          {formatRelative(comment.createdAt, new Date()) == formatRelative(comment.modifiedAt, new Date()) ? null : <p>Edited: {formatRelative(comment.modifiedAt, new Date())}</p>
         }
         </div>
         <div className={styles.commentLikeAndDislikeCont}>
-          <button className={styles.likeAndParaBtn}>
+          <button onClick={handleLike} type='button' className={`${styles.likeAndParaBtn} ${userCurrentLikeStatus == true ? styles.activeCommentLike : null}`}>
             <img className={styles.likeIcon} src={likeIcon} alt="like" />
-            <p>{comment.UserLikedComments.length}</p>
+            <p>{like}</p>
           </button>
-          <button className={styles.likeAndParaBtn}>
+          <button onClick={handleDislike} type='button' className={`${styles.likeAndParaBtn} ${userCurrentLikeStatus == false ? styles.activeCommentLike : null}`}>
             <img className={styles.likeIcon} src={dislikeIcon} alt="dislike" />
-            <p>{comment._count.UserLikedComments}</p>
+            <p>{dislike}</p>
           </button>
         </div>
       </div>

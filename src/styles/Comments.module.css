@@ -73,3 +73,7 @@
   gap: 1rem;
   justify-content: flex-end;
 }
+
+.activeCommentLike {
+  background-color:rgba(0,0,0,0.4);
+}
