@@ -183,11 +183,27 @@ const Blog = () => {
       .catch((err) => console.error(err));
     }
 
-    fetch(`http://localhost:3000/comments/${blogId}`)
-    .then((res) => res.json())
-    .then((res) => setComments(() => res))
-    .catch((err) => setCommentErr(() => err))
-    .finally(() => setLoadingComments(() => false));
+    if(isLoggedIn) {
+      const token = localStorage.getItem('token');
+      fetch(`http://localhost:3000/comments/${blogId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => setComments(() => res))
+      .catch((err) => setCommentErr(() => err))
+      .finally(() => setLoadingComments(() => false));
+    } else {
+      fetch(`http://localhost:3000/comments/${blogId}`)
+      .then((res) => res.json())
+      .then((res) => setComments(() => res))
+      .catch((err) => setCommentErr(() => err))
+      .finally(() => setLoadingComments(() => false));
+    }
+
+
 
   },[blogId, token, isLoggedIn]);
 

@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 
 import styles from '../../../styles/Comments.module.css';
 import { formatRelative } from 'date-fns';
@@ -17,8 +17,14 @@ const Comment = ({comment, blogAuthor}) => {
 
   const [ like, setLike ] = useState(comment.UserLikedComments.length);
   const [ dislike, setDislike ] = useState(comment._count.UserLikedComments);
-  const [ userCurrentLikeStatus, setUserCurrentLikeStatus ] = useState(null);
+  const [ userCurrentLikeStatus, setUserCurrentLikeStatus ] = useState(comment.userLikeStatus == 'undefined' ? null : comment.userLikeStatus);
   const [ updateCount, setUpdateCount ] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUserCurrentLikeStatus(comment.userLikeStatus == 'undefined' ? null : comment.userLikeStatus)
+    }, 1000)
+  }, [comment.userLikeStatus])
 
   const sendCurrentLike = (currentLikeStatus, commentId) => {
     clearTimeout(timerInstance.current.timer)
@@ -28,6 +34,16 @@ const Comment = ({comment, blogAuthor}) => {
     let virtualTime = 3;
 
     timerInstance.current.timer = setTimeout(() => {
+      const token = localStorage.getItem('token');
+      fetch(`http://localhost:3000/comments/like-comment/${commentId}/${currentLikeStatus}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      
       console.log(currentLikeStatus)
       console.log(commentId)
 
