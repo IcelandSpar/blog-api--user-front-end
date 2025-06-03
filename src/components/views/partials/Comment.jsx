@@ -7,6 +7,7 @@ import bookmarkHeart from '../../../assets/bookmark_heart.svg';
 import likeIcon from '../../../assets/thumb_up.svg';
 import dislikeIcon from '../../../assets/thumb_down.svg';
 import UserContext from '../../../UserContext';
+import cachedIcon from '../../../assets/cached.svg';
 
 
 const Comment = ({comment, blogAuthor}) => {
@@ -19,6 +20,7 @@ const Comment = ({comment, blogAuthor}) => {
   const [ dislike, setDislike ] = useState(comment._count.UserLikedComments);
   const [ userCurrentLikeStatus, setUserCurrentLikeStatus ] = useState(comment.userLikeStatus == 'undefined' ? null : comment.userLikeStatus);
   const [ updateCount, setUpdateCount ] = useState(null);
+  const [ loadingLikeSelect, setLoadingLikeSelect ] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,6 +29,7 @@ const Comment = ({comment, blogAuthor}) => {
   }, [comment.userLikeStatus])
 
   const sendCurrentLike = (currentLikeStatus, commentId) => {
+    setLoadingLikeSelect(true);
     clearTimeout(timerInstance.current.timer)
     clearInterval(updateCountTimerInst.current.timer);
 
@@ -43,6 +46,7 @@ const Comment = ({comment, blogAuthor}) => {
       })
       .then((res) => res.json())
       .then((res) => console.log(res))
+      .finally(() => setLoadingLikeSelect(false))
       
       console.log(currentLikeStatus)
       console.log(commentId)
@@ -137,8 +141,13 @@ const Comment = ({comment, blogAuthor}) => {
             <p>{dislike}</p>
           </button>
         </div>
-        <p>{updateCount}</p>
       </div>
+        {!loadingLikeSelect ? null : (
+      <div className={styles.loadingLikeCont}>
+      <img className={styles.loadingLikeIcon} src={cachedIcon} alt="loading" />
+      <p>Updating Like {updateCount}</p>
+    </div>
+        )}
     </li>
   )
 };
