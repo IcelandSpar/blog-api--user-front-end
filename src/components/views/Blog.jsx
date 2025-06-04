@@ -228,8 +228,8 @@ const Blog = () => {
             {!isLoggedIn ? null : (
               <>
             <div className={styles.blogLikeDislikeBtnCont}>
-              <button onClick={handleLike} className={userLikeStatus == true ? styles.activeLike : styles.notActive} type='button'><img src={thumbUp} alt="like" className={userLikeStatus == true ? styles.activeSvg : styles.notActive}/> Likes {like}</button>
-              <button onClick={handleDislike} className={userLikeStatus == false ? styles.activeDislike : styles.notActive} type='button'><img src={thumbDown} alt="dislike"  className={userLikeStatus == false ? styles.activeSvg : styles.notActive}/> Dislikes {dislike}</button>
+              <button onClick={handleLike} className={`${userLikeStatus == true ? styles.activeLike : styles.notActive} ${styles.blogLikeBtn}`} type='button'><img src={thumbUp} alt="like" className={userLikeStatus == true ? styles.activeSvg : styles.notActive}/> Likes {like}</button>
+              <button onClick={handleDislike} className={`${userLikeStatus == false ? styles.activeDislike : styles.notActive} ${styles.blogDislikeBtn}`} type='button'><img src={thumbDown} alt="dislike"  className={userLikeStatus == false ? styles.activeSvg : styles.notActive}/> Dislikes {dislike}</button>
             </div>
             {updateCount == null ? null : (
               <p className={styles.updateCountPara}>Updating in {updateCount} <img className={styles.cachedIcon} src={cachedIcon} alt="saving like status" /></p>

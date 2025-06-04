@@ -1,4 +1,5 @@
 import { useState, useContext, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from '../../../styles/Comments.module.css';
 import { formatRelative } from 'date-fns';
@@ -8,6 +9,7 @@ import likeIcon from '../../../assets/thumb_up.svg';
 import dislikeIcon from '../../../assets/thumb_down.svg';
 import UserContext from '../../../UserContext';
 import cachedIcon from '../../../assets/cached.svg';
+import commentProfileIcon from '../../../assets/person-msg-icon.svg';
 
 
 const Comment = ({comment, blogAuthor}) => {
@@ -21,6 +23,7 @@ const Comment = ({comment, blogAuthor}) => {
   const [ userCurrentLikeStatus, setUserCurrentLikeStatus ] = useState(comment.userLikeStatus == 'undefined' ? null : comment.userLikeStatus);
   const [ updateCount, setUpdateCount ] = useState(null);
   const [ loadingLikeSelect, setLoadingLikeSelect ] = useState(null);
+  const [ openUserLike, setOpenUserLike ] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -83,9 +86,10 @@ const Comment = ({comment, blogAuthor}) => {
         setUserCurrentLikeStatus(null);
         currentLikeState = null;
       }
+      sendCurrentLike(currentLikeState, commentId);
+    } else {
+      setOpenUserLike(true);
     }
-
-    sendCurrentLike(currentLikeState, commentId);
   };
 
   const handleDislike = (e, commentId) => {
@@ -106,22 +110,29 @@ const Comment = ({comment, blogAuthor}) => {
         setUserCurrentLikeStatus(null);
         currentLikeState = null;
       }
+      sendCurrentLike(currentLikeState, commentId);
+    } else {
+      setOpenUserLike(true);
     }
-    sendCurrentLike(currentLikeState, commentId);
   };
 
   return (
     <li className={styles.listItemCont}>
       <div className={styles.commentTitleUserHeartCont}>
-        <h3 className={styles.commentHeader}>{comment.commentTitle}</h3>
-        <div className={styles.commenUserAndHeartCont}>
-          <p className={styles.commentUser}>{comment.user.username}</p>
+        <div className={styles.titleAndHeartCont}>
+          <h3 className={styles.commentHeader}>{comment.commentTitle}</h3>
           {!(comment.authorHeartedComments.length > 0) ? null : (
             <div className={styles.authorHeartAndIconCont}>
               <img className={styles.bookmarkHeartIcon} src={bookmarkHeart} alt="author hearted" />
               <p className={styles.commentAuthorHeart}>{`${blogAuthor} loved!`}</p>
             </div>
           )}
+        </div>
+        <div className={styles.commenUserAndHeartCont}>
+          <div className={styles.profilePicCommentUserCont}>
+            <img src={commentProfileIcon} className={styles.commentProfileIcon} alt="profile picture" />
+            <p className={styles.commentUser}>{comment.user.username}</p>
+          </div>
         </div>
       </div>
       <p>{comment.comment}</p>
@@ -132,16 +143,19 @@ const Comment = ({comment, blogAuthor}) => {
         }
         </div>
         <div className={styles.commentLikeAndDislikeCont}>
-          <button onClick={(e) => handleLike(e, comment.id)} type='button' className={`${styles.likeAndParaBtn} ${userCurrentLikeStatus == true ? styles.activeCommentLike : null}`}>
+          <button onClick={(e) => handleLike(e, comment.id)} type='button' className={`${styles.likeAndParaBtn} ${userCurrentLikeStatus == true ? styles.activeCommentLike : null} ${styles.commentLikeBtn}`}>
             <img className={styles.likeIcon} src={likeIcon} alt="like" />
             <p>{like}</p>
           </button>
-          <button onClick={(e) => handleDislike(e, comment.id)} type='button' className={`${styles.likeAndParaBtn} ${userCurrentLikeStatus == false ? styles.activeCommentLike : null}`}>
+          <button onClick={(e) => handleDislike(e, comment.id)} type='button' className={`${styles.likeAndParaBtn} ${userCurrentLikeStatus == false ? styles.activeCommentLike : null} ${styles.commentDislikeBtn}`}>
             <img className={styles.likeIcon} src={dislikeIcon} alt="dislike" />
             <p>{dislike}</p>
           </button>
         </div>
       </div>
+      {!openUserLike ? null : (
+        <p className={styles.logInMsgParaLink}>You must be <Link to='/login'>logged in</Link> to like a comment</p>
+      )}
         {!loadingLikeSelect ? null : (
       <div className={styles.loadingLikeCont}>
       <img className={styles.loadingLikeIcon} src={cachedIcon} alt="loading" />
