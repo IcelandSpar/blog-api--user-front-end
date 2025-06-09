@@ -22,7 +22,6 @@ const CommentForm = () => {
   }
 
   const characterCount = (input, e, setter) => {
-    console.log('hello')
     setter(input.current.value.length);
   }
 
@@ -71,7 +70,7 @@ const CommentForm = () => {
         <div className={styles.labelAndInputCont}>
           <label htmlFor="commentContent">Comment: </label>
           <div className={styles.titleInputCountCont}>
-            <textarea maxLength={255} ref={commentContentRef} className={styles.commentContentTextArea} name="commentContent" id="commentContent" onChange={(e) => characterCount(commentContentRef, e, setCommentCharacterCount)} required></textarea>
+            <textarea rows='5' maxLength={255} ref={commentContentRef} className={styles.commentContentTextArea} name="commentContent" id="commentContent" onChange={(e) => characterCount(commentContentRef, e, setCommentCharacterCount)} required></textarea>
             <p className={`${styles.titleCharacterCount} ${styles.titleCharacterCount} ${commentCharacterCount > 255 ? styles.titleErrInput : null}`}>{commentCharacterCount} / 255</p>
           </div>
         </div>

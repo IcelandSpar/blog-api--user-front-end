@@ -13,13 +13,9 @@ const AuthForm = ({formType, styles}) => {
     formData.append('username', usernameInputRef.current.value);
     formData.append('password', passwordInputRef.current.value);
 
-
-    
     await fetch(`http://localhost:3000/${formType}`, {
       method: 'POST',
       body: new URLSearchParams(formData),
-
-
     })
     .then((res) => {
       if(!res.ok && formType == 'login') {
@@ -87,7 +83,7 @@ const AuthForm = ({formType, styles}) => {
       )}
       <div className={styles.inputAndLabelCont}>
         <label htmlFor="username">Username: </label>
-        <input type="text" id="username" name="username" ref={usernameInputRef} className={styles.formInputs}/>
+        <input type="text" id="username" name="username" ref={usernameInputRef} className={styles.formInputs} autoFocus/>
       </div>
 
       <div className={styles.inputAndLabelCont}>
