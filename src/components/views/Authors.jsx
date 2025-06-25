@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { formatRelative } from "date-fns";
 
 import Navbar from "./partials/Navbar";
 
@@ -32,6 +33,7 @@ const Authors = () => {
         <section className={styles.authorInfoCont}>
           <h1 className={styles.authorUserHeading}>{author.user.username}</h1>
           <p className={styles.authorBio}>{author.bio}</p>
+          <p>Joined: {formatRelative(author.joined, new Date())}</p>
         </section>
       )}
       </main>
