@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { formatRelative } from 'date-fns'
+import { formatRelative } from 'date-fns';
+import parse from 'html-react-parser';
+import DOMPurify from 'dompurify';
 
 import UserContext from '../../UserContext.jsx';
 
@@ -38,6 +40,14 @@ const Blog = () => {
 
 
   const token = localStorage.getItem('token');
+
+  const parsedHtml = (content) => {
+    const cleanHtmlString = DOMPurify.sanitize(content,
+        {USE_Profiles: {html: true}}
+      );
+    const html = parse(cleanHtmlString);
+    return html
+  }
 
   const  sendCurrentLike = (currentState) => {
     clearInterval(updateCountTimerInst.current.timer)
@@ -222,7 +232,7 @@ const Blog = () => {
           <div className={styles.blogContent}>
             <h1 className={styles.blogTitle}>{blog.title}</h1>
             <p>Written By: <Link to={`/authors/${blog.authorId}`}>{blog.author.user.username}</Link></p>
-            <p>{blog.content}</p>
+            <div className={styles.blogContentCont}>{blog.content && parsedHtml(blog.content)}</div>
             <p>Created: {formatRelative(blog.createdAt, new Date())}</p>
             <p>Last Modified: {formatRelative(blog.modifiedAt, new Date())}</p>
             {!isLoggedIn ? null : (

@@ -3,8 +3,8 @@ import { useRef, useState } from 'react';
 const AuthForm = ({formType, styles}) => {
   const usernameInputRef = useRef(null);
   const passwordInputRef = useRef(null);
-  const [loginErr, setLoginErr] = useState(false);
-  const [registerErr, setRegisterErr] = useState(false);
+  const [ loginErr, setLoginErr ] = useState(false);
+  const [ registerErr, setRegisterErr ] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,6 +42,7 @@ const AuthForm = ({formType, styles}) => {
             
 
     })
+    .then()
     .catch((err) => {
 
 
