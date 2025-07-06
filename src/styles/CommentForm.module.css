@@ -20,6 +20,10 @@
 
 }
 
+.postCommentErrUl {
+  padding: 0 1rem;
+}
+
 .titleInputCountCont {
   width: 100%;
   position: relative;

@@ -19,6 +19,12 @@
 
 .commentHeader {
   font-size: 1.4rem;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.commentContentPara {
+  overflow-wrap: break-word;
 }
 
 .profilePicCommentUserCont {

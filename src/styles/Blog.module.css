@@ -1,7 +1,8 @@
 .blogPage {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 1fr 25fr 1fr;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  margin-bottom: 2rem;
 }
 
 .navStyle {

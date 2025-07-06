@@ -89,7 +89,7 @@
 
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
 
   .titleAndSelectCon {
     display: flex;
@@ -98,7 +98,6 @@
   }
 
   .blogsHeading {
-
   }
   
   .dropDownSelect {
