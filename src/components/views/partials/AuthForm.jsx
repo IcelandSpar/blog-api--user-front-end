@@ -38,7 +38,7 @@ const AuthForm = ({formType, styles}) => {
         setErrMsgs(res.errors)
       }
 
-      if(res.message) {
+      if(res.message && formType == 'register') {
         setRegisterErr(true)
       }
 
