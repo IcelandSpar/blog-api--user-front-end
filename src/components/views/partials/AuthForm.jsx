@@ -5,15 +5,18 @@ const AuthForm = ({formType, styles}) => {
   const passwordInputRef = useRef(null);
   const [ loginErr, setLoginErr ] = useState(false);
   const [ registerErr, setRegisterErr ] = useState(false);
+  const [ errMsgs, setErrMsgs ] = useState([]);
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
+    setErrMsgs([]);
+    setRegisterErr(false);
     let isThereLoginErr = false;
     const formData = new FormData();
     formData.append('username', usernameInputRef.current.value);
     formData.append('password', passwordInputRef.current.value);
 
-    await fetch(`http://localhost:3000/${formType}`, {
+    fetch(`http://localhost:3000/${formType}`, {
       method: 'POST',
       body: new URLSearchParams(formData),
     })
@@ -22,7 +25,7 @@ const AuthForm = ({formType, styles}) => {
         isThereLoginErr = true;
         setLoginErr(true);
       } else if(!res.ok && formType == 'register') {
-        setRegisterErr(true);
+        null
       } else if(res.ok) {
         setRegisterErr(false);
         setLoginErr(false);
@@ -30,6 +33,15 @@ const AuthForm = ({formType, styles}) => {
       }
       return res.json()})
     .then((res) => {
+
+      if(res.errors) {
+        setErrMsgs(res.errors)
+      }
+
+      if(res.message) {
+        setRegisterErr(true)
+      }
+
       
       if(formType == 'login') {
         if(res.token == undefined) {
@@ -42,10 +54,7 @@ const AuthForm = ({formType, styles}) => {
             
 
     })
-    .then()
     .catch((err) => {
-
-
       console.error(err)
     })
     .finally(() => {
@@ -72,14 +81,21 @@ const AuthForm = ({formType, styles}) => {
 
     <fieldset className={styles.formFieldSet}>
       <legend>{formType[0].toUpperCase() + formType.slice(1)}</legend>
+      {!errMsgs ? null : (
+        <ul>
+          {errMsgs.map((errorMsg, indx) => {
+            return (<li className={styles.validationMsgs} key={indx}>{errorMsg.msg}</li>)
+          })}
+        </ul>
+      )}
       {!registerErr ? null : (
         <div>
-          <p>Username already exists, please try again.</p>
+          <p className={styles.usernameExistsMsg}>Username already exists, please try again.</p>
         </div>
       )}
       {!loginErr ? null : (
         <div>
-          <p>Username and password combination is incorrect. Please try again.</p>
+          <p className={styles.usernamePasswordIncMsg}>Username and password combination is incorrect. Please try again.</p>
         </div>
       )}
       <div className={styles.inputAndLabelCont}>

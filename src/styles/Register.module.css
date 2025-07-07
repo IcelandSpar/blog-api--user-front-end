@@ -53,6 +53,11 @@
   cursor: pointer;
 }
 
+.validationMsgs {
+  font-size: 1rem;
+  margin: 0 1rem;
+}
+
 @media (max-width: 800px) {
   .loginPage{
     grid-template-columns: 1fr;
