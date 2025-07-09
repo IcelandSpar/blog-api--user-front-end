@@ -1,0 +1,30 @@
+.navStyle {
+  padding: none;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  align-self: center;
+  justify-self: center;
+}
+
+.errorPageCont {
+}
+
+.errorMsgContainer {
+  margin: 5rem;
+  font-size: 2em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 500px) {
+  .errorPageCont {
+    width: 100%;
+  }
+
+  .errorMsgContainer {
+    font-size: 1em;
+  }
+  
+}

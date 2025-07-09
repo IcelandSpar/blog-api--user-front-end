@@ -7,6 +7,7 @@ import App from './App.jsx'
 import Home from './components/views/Home.jsx';
 import Blogs from './components/views/Blogs.jsx';
 import Login from './components/views/Login.jsx';
+import Error from './components/views/Error.jsx';
 import Logout from './components/views/Logout.jsx';
 import Register from './components/views/Register.jsx';
 
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
     path: '/authors/:authorId',
     element: <Authors/>,
   },
+  {
+    path: '*',
+    element: <Error/>
+  }
 
 ]);
 
