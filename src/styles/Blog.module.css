@@ -6,8 +6,10 @@
 }
 
 .navStyle {
-  grid-column: 1 / 4;
+  padding: none;
+  grid-column: 2 / 3;
   grid-row: 1 / 2;
+  align-self: center;
   justify-self: center;
 }
 
