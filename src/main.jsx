@@ -45,9 +45,14 @@ export const router = createBrowserRouter([
     element: <Authors/>,
   },
   {
+    path: '/error',
+    element: <Error/>
+  },
+  {
     path: '*',
     element: <Error/>
   }
+
 
 ]);
 

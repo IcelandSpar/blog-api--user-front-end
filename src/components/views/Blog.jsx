@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { formatRelative } from 'date-fns';
 import parse from 'html-react-parser';
 import DOMPurify from 'dompurify';
@@ -22,6 +22,7 @@ const Blog = () => {
   const updateCountTimerInst = useRef({timer: 3});
   const { isLoggedIn, LoadingCommentForm } = useContext(UserContext);
   const commentSelectInput = useRef(null);
+  const navigate = useNavigate();
 
   const [blog, setBlog] = useState(null);
   const [error, setError] = useState(null);
@@ -175,7 +176,10 @@ const Blog = () => {
       setLike(response._count.UsersLikedBlogs);
       setDislike(response.dislikes);
     })
-    .catch((error) => setError(error))
+    .catch((error) => {
+      setError(error);
+      navigate('/error')
+    })
     .finally(() => setLoading(false));
 
     if(isLoggedIn) {
@@ -215,7 +219,7 @@ const Blog = () => {
 
 
 
-  },[blogId, token, isLoggedIn]);
+  }, [blogId, token, isLoggedIn]);
 
   if(error) {
     return(

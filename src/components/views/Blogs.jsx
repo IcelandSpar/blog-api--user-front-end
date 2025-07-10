@@ -1,5 +1,5 @@
-import {  useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import {  useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { formatRelative } from 'date-fns';
 
 import Navbar from './partials/Navbar';
@@ -7,12 +7,15 @@ import Navbar from './partials/Navbar';
 import likesIcon from '../../assets/thumb_up.svg';
 
 import styles from '../../styles/Blogs.module.css'
+import UserContext from '../../UserContext';
 
 const Blogs = () => {
+  const { isLoggedIn } = useContext(UserContext);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [blogs, setBlogs] = useState([]);
+
+  const navigate = useNavigate();
 
   const sortHandler = async (e) => {
     setLoading(true)
@@ -42,7 +45,7 @@ const Blogs = () => {
 
   useEffect(() => {
 
-    setLoading(true);
+      setLoading(true);
 
       fetch("http://localhost:3000/blogs/preview", { mode: "cors"})
       .then((response) => response.json())
